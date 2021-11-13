@@ -19,14 +19,91 @@ let massive = [];
 let checkVariable = false;
 
 class Automobile {
-    constructor(mark, model, year, power, accelerate, color, autopilot) {
-        this.mark = mark;
-        this.model = model;
-        this.year = year;
-        this.power = power;
-        this.accelerate = accelerate;
-        this.color = color;
-        this.autopilot = autopilot;
+    constructor(mark, model, year, power, accelerate, color, autopilot, types) {
+        this._mark = mark;
+        this._model = model;
+        this._year = year;
+        this._power = power;
+        this._accelerate = accelerate;
+        this._color = color;
+        this._autopilot = autopilot;
+        this._types = types;
+    }
+
+    remove(arr, ind) {
+        arr.splice([ind - 1], 1)
+    }
+
+    get mark() {
+        return this._mark
+    }
+
+    get model() {
+        return this._model
+    }
+
+    get year() {
+        return this._year
+    }
+
+    get power() {
+        return this._power
+    }
+
+    get accelerate() {
+        return this._accelerate
+    }
+
+    get color() {
+        return this._color
+    }
+
+    get autopilot() {
+        return this._autopilot
+    }
+
+    set mark(str) {
+        this._mark = str
+    }
+
+    set model(str) {
+        this._model = str
+    }
+
+    set year(str) {
+        this._year = str
+    }
+
+    set power(str) {
+        this._power = str
+    }
+
+    set accelerate(str) {
+        this._accelerate = str
+    }
+
+    set color(str) {
+        this._color = str
+    }
+
+    set autopilot(str) {
+        if (str == true) {
+            this._autopilot = 'присутствует'
+        } else {
+            this._autopilot = 'отсутствует'
+        }
+    }
+
+    get types() {
+        return this._types
+    }
+
+    set types(str) {
+        if (select.value == 1) {
+            this._types = 'Электромобиль'
+        } else {
+            this._types = 'ДВС-ник'
+        }
     }
 
     // consol() {
@@ -38,19 +115,49 @@ class Automobile {
 
 class Electromobile extends Automobile {
     constructor(mark, model, year, power, accelerate, color, autopilot, types, distance, charging) {
-        super(mark, model, year, power, accelerate, color, autopilot);
-        this.types = types;
-        this.distance = distance;
-        this.charging = charging;
+        super(mark, model, year, power, accelerate, color, autopilot, types);
+        this._distance = distance;
+        this._charging = charging;
+    }
+
+    get distance() {
+        return this._distance
+    }
+
+    set distance(str) {
+        this._distance = str
+    }
+
+    get charging() {
+        return this._charging
+    }
+
+    set charging(str) {
+        this._charging = str
     }
 }
 
 class Dvs extends Automobile {
     constructor(mark, model, year, power, accelerate, color, autopilot, types, capacity, consumption) {
-        super(mark, model, year, power, accelerate, color, autopilot);
-        this.types = types;
-        this.capacity = capacity;
-        this.consumption = consumption;
+        super(mark, model, year, power, accelerate, color, autopilot, types);
+        this._capacity = capacity;
+        this._consumption = consumption;
+    }
+
+    get capacity() {
+        return this._capacity
+    }
+
+    set capacity(str) {
+        this._capacity = str
+    }
+
+    get consumption() {
+        return this._consumption
+    }
+
+    set consumption(str) {
+        this._consumption = str
     }
 }
 
@@ -125,14 +232,44 @@ function checkAllFields() {
 function addClass() {
 
     if (select.value == 1) {
-        let auto = new Electromobile(inp_mark.value, inp_model.value, inp_year.value, inp_power.value, inp_accelerate.value, inp_color.value, inp_autopilot.checked, 'Электромобиль', inp_powerReserve.value, inp_chargeTime.value);
-        // auto.consol();
+        let auto = new Electromobile();
+        auto.mark = inp_mark.value;
+        auto.model = inp_model.value;
+        auto.year = inp_year.value;
+        auto.power = inp_power.value;
+        auto.accelerate = inp_accelerate.value;
+        auto.color = inp_color.value;
+        auto.autopilot = inp_autopilot.checked;
+        auto.types = select.value;
+        auto.distance = inp_powerReserve.value;
+        auto.charging = inp_chargeTime.value;
+        console.log(auto)
         massive.push(auto)
     } else {
-        let auto = new Dvs(inp_mark.value, inp_model.value, inp_year.value, inp_power.value, inp_accelerate.value, inp_color.value, inp_autopilot.checked, 'ДВС-ник', inp_engCapacity.value, inp_fuelConsumption.value);
-        // auto.consol();
+        let auto = new Dvs();
+        auto.mark = inp_mark.value;
+        auto.model = inp_model.value;
+        auto.year = inp_year.value;
+        auto.power = inp_power.value;
+        auto.accelerate = inp_accelerate.value;
+        auto.color = inp_color.value;
+        auto.autopilot = inp_autopilot.checked;
+        auto.types = select.value;
+        auto.capacity = inp_engCapacity.value;
+        auto.consumption = inp_fuelConsumption.value;
+        console.log(auto)
         massive.push(auto)
     }
+
+    // if (select.value == 1) {
+    //     let auto = new Electromobile(inp_mark.value, inp_model.value, inp_year.value, inp_power.value, inp_accelerate.value, inp_color.value, inp_autopilot.checked, 'Электромобиль', inp_powerReserve.value, inp_chargeTime.value);
+    //     // auto.consol();
+    //     massive.push(auto)
+    // } else {
+    //     let auto = new Dvs(inp_mark.value, inp_model.value, inp_year.value, inp_power.value, inp_accelerate.value, inp_color.value, inp_autopilot.checked, 'ДВС-ник', inp_engCapacity.value, inp_fuelConsumption.value);
+    //     // auto.consol();
+    //     massive.push(auto)
+    // }
     // inp_mark.value = '';
     // inp_model.value = '';
     // inp_year.value = '';
@@ -149,7 +286,7 @@ function addClass() {
     // inp_chargeTime.value = ''
     // inp_engCapacity.value = ''
     // inp_fuelConsumption.value = ''
-render();
+    render();
 }
 
 const render = function () {
@@ -169,40 +306,43 @@ const render = function () {
             </tr>`;
     localStorage.clear();
 
-    for (let i = 0; i <= massive.length; i++) {
+    for (let i = 0; i < massive.length; i++) {
+        console.log(massive)
         try {
-            if (massive[i]['types'] == 'Электромобиль') {
+            if (massive[i]['types'] === 'Электромобиль') {
                 let row = document.createElement('tr');
                 row.innerHTML = `
-                <td>${massive[i]['mark']}</td>
-                <td>${massive[i]['model']}</td>
-                <td>${massive[i]['year']}</td>
-                <td>${massive[i]['power']}</td>
-                <td>${massive[i]['accelerate']}</td>
-                <td>${massive[i]['color']}</td>
-                <td>${massive[i]['autopilot']}</td>
-                <td>${massive[i]['types']}</td>
-                <td>${massive[i]['distance']}</td>
-                <td>${massive[i]['charging']}</td>
+                <td>${massive[i]['_mark']}</td>
+                <td>${massive[i]['_model']}</td>
+                <td>${massive[i]['_year']}</td>
+                <td>${massive[i]['_power']}</td>
+                <td>${massive[i]['_accelerate']}</td>
+                <td>${massive[i]['_color']}</td>
+                <td>${massive[i]['_autopilot']}</td>
+                <td>${massive[i]['_types']}</td>
+                <td>${massive[i]['_distance']}</td>
+                <td>${massive[i]['_charging']}</td>
                 <td>прочерк</td>
                 <td>прочерк</td>
+                <td><button>Удалить</button></td>
             `;
                 table.append(row);
             } else {
                 let row = document.createElement('tr');
                 row.innerHTML = `
-                <td>${massive[i]['mark']}</td>
-                <td>${massive[i]['model']}</td>
-                <td>${massive[i]['year']}</td>
-                <td>${massive[i]['power']}</td>
-                <td>${massive[i]['accelerate']}</td>
-                <td>${massive[i]['color']}</td>
-                <td>${massive[i]['autopilot']}</td>
-                <td>${massive[i]['types']}</td>
+                <td>${massive[i]['_mark']}</td>
+                <td>${massive[i]['_model']}</td>
+                <td>${massive[i]['_year']}</td>
+                <td>${massive[i]['_power']}</td>
+                <td>${massive[i]['_accelerate']}</td>
+                <td>${massive[i]['_color']}</td>
+                <td>${massive[i]['_autopilot']}</td>
+                <td>${massive[i]['_types']}</td>
                 <td>прочерк</td>
                 <td>прочерк</td>
-                <td>${massive[i]['capacity']}</td>
-                <td>${massive[i]['consumption']}</td>
+                <td>${massive[i]['_capacity']}</td>
+                <td>${massive[i]['_consumption']}</td>
+                 <td><button>Удалить</button></td>
             `;
                 table.append(row);
             }
@@ -212,9 +352,24 @@ const render = function () {
     }
 
     localStorage.name = JSON.stringify(massive);
+    console.log(localStorage.name);
 };
 
-btn.addEventListener('mouseover',  () => {
+table.addEventListener('click', (e) => {
+    if (e.target.closest('button')) {
+        let rowIndex = e.target.parentElement.parentElement.rowIndex;
+        let auto = new Automobile()
+        auto.remove(massive, rowIndex)
+        // massive.splice([rowIndex - 1], 1)
+        // console.log(massive.length)
+        // console.log(massive)
+        // delete massive[rowIndex - 1]
+        // localStorage.clear();
+        render()
+    }
+})
+
+btn.addEventListener('mouseover', () => {
     console.log(checkAllFields())
     if (checkVariable) {
         btn.addEventListener('click', addClass)
@@ -224,11 +379,12 @@ btn.addEventListener('mouseover',  () => {
 })
 
 massive = JSON.parse(localStorage.getItem('name'));
-
-if (massive) {
+console.log(massive)
+if (massive.length > 0) {
     render();
 } else {
     massive = [];
-};
+}
+;
 //
 // localStorage.clear();

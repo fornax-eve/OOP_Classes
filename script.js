@@ -295,7 +295,7 @@ const render = function () {
                 <td>${massive[i]['_charging']}</td>
                 <td>прочерк</td>
                 <td>прочерк</td>
-                <td><button style="border: 0; color: red;">Удалить</button></td>
+                <td><button class = "btn"; style="border: 0; color: red;">Удалить</button></td>
             `;
                 table.append(row);
             } else {
@@ -313,7 +313,7 @@ const render = function () {
                 <td>прочерк</td>
                 <td>${massive[i]['_capacity']}</td>
                 <td>${massive[i]['_consumption']}</td>
-                 <td><button style="border: 0; color: red;">Удалить</button></td>
+                 <td><button class = "btn"; style="border: 0; color: red;">Удалить</button></td>
             `;
                 table.append(row);
             }

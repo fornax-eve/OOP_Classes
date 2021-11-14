@@ -116,6 +116,12 @@ tr:hover td {
     color: #6699ff;
 }
 
-td:last-child:hover {
-    background-color: #d5bcbc;
+/*td:last-child:hover {*/
+/*    background-color: #d5bcbc;*/
+/*}*/
+
+.btn:hover {
+    cursor: pointer;
+    background-color: #7f0808;
+
 }

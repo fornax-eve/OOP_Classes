@@ -13,6 +13,7 @@ const inp_fuelConsumption = document.querySelector('.inp_fuelConsumption');
 const formClass = document.querySelector('.formClass');
 const select = document.querySelector('[name="view"]')
 const table = document.querySelector('table')
+const allInputs = document.querySelectorAll('input')
 
 const btn = document.querySelector('.save');
 let massive = [];
@@ -105,12 +106,6 @@ class Automobile {
             this._types = 'ДВС-ник'
         }
     }
-
-    // consol() {
-    //     console.log(this);
-    //     massive.push(this)
-    //     console.log(massive)
-    // }
 }
 
 class Electromobile extends Automobile {
@@ -218,8 +213,8 @@ function isString(str) {
 
 function checkAllFields() {
     if (select.value != 0) {
-        if (isString(inp_mark.value) && isString(inp_model.value) && isNumber(+inp_year.value) && isNumber(+inp_power.value) && isNumber(+inp_accelerate.value) && isString(inp_color.value)) {
-            if ((select.value == 1 && isNumber(+inp_powerReserve.value) && isNumber(+inp_chargeTime.value)) || (select.value == 2 && isNumber(+inp_engCapacity.value) && isNumber(+inp_fuelConsumption.value))) {
+        if ( (/^[а-яА-Яa-zA-Z\-\s]+$/.test(inp_mark.value)) && (/^[а-яА-Я\w\.\s\-]+$/.test(inp_model.value)) && (/^[\d]+$/.test(inp_year.value)) && (/^[\d]+$/.test(inp_power.value)) && (/^[\d.,:]+$/.test(inp_accelerate.value)) && (/^[а-яА-Яa-zA-Z\-]+$/.test(inp_color.value))) {
+            if ((select.value == 1 && (/^[\d.,:]+$/.test(inp_powerReserve.value)) && (/^[\d.,:]+$/.test(inp_chargeTime.value)) || (select.value == 2 && (/^[\d.,:]+$/.test(inp_engCapacity.value)) && (/^[\d.,:]+$/.test(inp_fuelConsumption.value))))) {
                 checkVariable = true;
                 return checkVariable;
             }
@@ -243,8 +238,8 @@ function addClass() {
         auto.types = select.value;
         auto.distance = inp_powerReserve.value;
         auto.charging = inp_chargeTime.value;
-        console.log(auto)
         massive.push(auto)
+        allInputs.forEach(item => item.value = '')
     } else {
         let auto = new Dvs();
         auto.mark = inp_mark.value;
@@ -257,40 +252,16 @@ function addClass() {
         auto.types = select.value;
         auto.capacity = inp_engCapacity.value;
         auto.consumption = inp_fuelConsumption.value;
-        console.log(auto)
         massive.push(auto)
+        allInputs.forEach(item => item.value = '')
     }
-
-    // if (select.value == 1) {
-    //     let auto = new Electromobile(inp_mark.value, inp_model.value, inp_year.value, inp_power.value, inp_accelerate.value, inp_color.value, inp_autopilot.checked, 'Электромобиль', inp_powerReserve.value, inp_chargeTime.value);
-    //     // auto.consol();
-    //     massive.push(auto)
-    // } else {
-    //     let auto = new Dvs(inp_mark.value, inp_model.value, inp_year.value, inp_power.value, inp_accelerate.value, inp_color.value, inp_autopilot.checked, 'ДВС-ник', inp_engCapacity.value, inp_fuelConsumption.value);
-    //     // auto.consol();
-    //     massive.push(auto)
-    // }
-    // inp_mark.value = '';
-    // inp_model.value = '';
-    // inp_year.value = '';
-    // inp_power.value = '';
-    // inp_accelerate.value = '';
-    // inp_color.value = '';
-    // inp_autopilot.checked = false;
-    // select.firstElementChild.selected = 'true';
-    // inp_powerReserve.setAttribute('disabled', 'disabled')
-    // inp_chargeTime.setAttribute('disabled', 'disabled')
-    // inp_engCapacity.setAttribute('disabled', 'disabled')
-    // inp_fuelConsumption.setAttribute('disabled', 'disabled')
-    // inp_powerReserve.value = ''
-    // inp_chargeTime.value = ''
-    // inp_engCapacity.value = ''
-    // inp_fuelConsumption.value = ''
     render();
 }
 
 const render = function () {
-    table.innerHTML = `<tr>
+    table.innerHTML = `
+<caption>Избранные модели</caption>
+<tr>
                 <th>Марка</th>
                 <th>Модель</th>
                 <th>Год выпуска</th>
@@ -307,9 +278,9 @@ const render = function () {
     localStorage.clear();
 
     for (let i = 0; i < massive.length; i++) {
-        console.log(massive)
         try {
-            if (massive[i]['types'] === 'Электромобиль') {
+            if (massive[i]['_types'] === 'Электромобиль') {
+                // console.log(massive[i])
                 let row = document.createElement('tr');
                 row.innerHTML = `
                 <td>${massive[i]['_mark']}</td>
@@ -324,7 +295,7 @@ const render = function () {
                 <td>${massive[i]['_charging']}</td>
                 <td>прочерк</td>
                 <td>прочерк</td>
-                <td><button>Удалить</button></td>
+                <td><button style="border: 0; color: red;">Удалить</button></td>
             `;
                 table.append(row);
             } else {
@@ -342,7 +313,7 @@ const render = function () {
                 <td>прочерк</td>
                 <td>${massive[i]['_capacity']}</td>
                 <td>${massive[i]['_consumption']}</td>
-                 <td><button>Удалить</button></td>
+                 <td><button style="border: 0; color: red;">Удалить</button></td>
             `;
                 table.append(row);
             }
@@ -352,7 +323,7 @@ const render = function () {
     }
 
     localStorage.name = JSON.stringify(massive);
-    console.log(localStorage.name);
+    // console.log(localStorage.name);
 };
 
 table.addEventListener('click', (e) => {
@@ -360,11 +331,6 @@ table.addEventListener('click', (e) => {
         let rowIndex = e.target.parentElement.parentElement.rowIndex;
         let auto = new Automobile()
         auto.remove(massive, rowIndex)
-        // massive.splice([rowIndex - 1], 1)
-        // console.log(massive.length)
-        // console.log(massive)
-        // delete massive[rowIndex - 1]
-        // localStorage.clear();
         render()
     }
 })
@@ -379,12 +345,11 @@ btn.addEventListener('mouseover', () => {
 })
 
 massive = JSON.parse(localStorage.getItem('name'));
-console.log(massive)
+
 if (massive.length > 0) {
     render();
 } else {
     massive = [];
 }
-;
-//
+
 // localStorage.clear();

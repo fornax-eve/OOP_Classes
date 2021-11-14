@@ -12,7 +12,15 @@ header {
 }
 
 label {
-    padding:5px;
+    background-color: #b3d2e5;
+    margin: 5px;
+    font-weight: bold;
+    padding: 5px;
+    color: #090950;
+    border-radius: 15%;
+    border: 1px solid #0c1d4e;
+    /*background: linear-gradient(#d9b3b4, #ad7474);*/
+    /*background: linear-gradient(to bottom, rgba(49, 68, 198, 0.4), rgba(70, 134, 78, 0.6));*/
 }
 
 .container {
@@ -21,6 +29,11 @@ label {
 }
 
 .container-1 {
+
+
+    background-image: linear-gradient(to top, rgba(70, 134, 78, 0.7), rgba(49, 68, 198, 0.5)), url("vienna.jpeg");
+    /*background-image: url('vienna.jpeg');*/
+    background-size: 100%;
     background-color: #fff;
     /*height: 100px;*/
     /*margin: 25px;*/
@@ -73,19 +86,36 @@ input:focus {
 }
 
 table {
+    margin-top: 3px;
+    border-collapse: collapse;
+    border: 3px solid goldenrod;
     color: #c4882a;
     font-family: 'Roboto', sans-serif;
+    font-size: 16px;
     background:  radial-gradient(farthest-corner at 50% 50%, white, #DCECF8);
     line-height: 1.8;
+    width: 100%;
+    text-align: center;
 }
 
 th {
     padding: 10px;
     border: 1px solid #A9E2CC;
+    color: darkblue;
+    border-bottom: 2px solid #6678b1;
 }
 
 td {
-    font-size: 0.8em;
-    padding: 5px 7px;
+    font-size: 1em;
+    padding: 5px 10px;
     border: 1px solid #A9E2CC;
+    transition: .3s linear;
+}
+
+tr:hover td {
+    color: #6699ff;
+}
+
+td:last-child:hover {
+    background-color: #d5bcbc;
 }
